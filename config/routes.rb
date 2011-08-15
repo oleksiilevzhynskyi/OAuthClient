@@ -2,8 +2,10 @@ OAuthClient::Application.routes.draw do
 
   root :to => "users#index"
 
-
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
+    get 'sign_in', :to => 'users/sessions#new', :as => :new_user_session
+    get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
+  end
   resources :users
 
   # The priority is based upon order of creation:
