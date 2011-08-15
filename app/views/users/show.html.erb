@@ -4,12 +4,21 @@
   <b>Login:</b>
   <%= @user.login %>
 </p>
-
 <p>
   <b>Name:</b>
   <%= @user.name %>
 </p>
+<p>
+  <b>Screen name:</b>
+  <%= @user.screen_name %>
+</p>
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
 
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
+
