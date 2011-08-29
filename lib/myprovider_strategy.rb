@@ -8,7 +8,6 @@ module OmniAuth
       def initialize(app, client_id=nil, client_secret=nil, options={}, &block)
         @secret = client_secret
         @client_id = client_id
-        p '0'*80
         client_options = {
           :site => "http://localhost:3333",
           :authorize_url => "http://localhost:3333/oauth/autorize",
@@ -22,17 +21,15 @@ module OmniAuth
 
       # redirect to the Myprovider website
       def request_phase
-        p '1'*80
         r = Rack::Response.new
         r.redirect @auth_redirect + "?oauth=#{@client_id + Digest::SHA1.hexdigest(@secret)};callback_url=http://localhost:3000/users/auth/myprovider/callback"
         r.finish
       end
 
       def callback_phase
-        p '2'*80
         uid, username, token = request.params["uid"], request.params["username"], request.params["token"]
-        sha1 = Digest::SHA1.hexdigest("a mix of  #{@secret}, #{uid}, #{username}")
-
+        sha1 = Digest::SHA1.hexdigest("#{@secret}, #{uid}, #{username}")
+        p sha1
         # check if the request comes from Myprovider or not
 	      if sha1 == token
           @uid, @username = uid, username
@@ -45,11 +42,12 @@ module OmniAuth
        end
 
       def build_access_token
-        p 'B'*80
+        @access_token = ::OAuth2::AccessToken.new(client, myprovider_session['access_token'], {:mode => :query, :param_name => 'access_token'})
       end
+
+
       # normalize user's data according to http://github.com/intridea/omniauth/wiki/Auth-Hash-Schema
       def auth_hash
-        p '3'*80
         OmniAuth::Utils.deep_merge(super(), {
           'uid' => @uid,
           'user_info' => {

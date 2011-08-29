@@ -19,10 +19,11 @@ ActiveRecord::Schema.define(:version => 20110815204323) do
     t.datetime "updated_at"
     t.string   "email",                             :default => "", :null => false
     t.string   "encrypted_password", :limit => 128, :default => "", :null => false
-    t.integer  "twitter_id",                                        :null => false
+    t.integer  "oauth_id",                                        :null => false
     t.string   "screen_name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
 
 end
+
