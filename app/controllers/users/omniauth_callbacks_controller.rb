@@ -1,7 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def myprovider
-    p current_user
     # You need to implement the method below in your model
     @user = User.find_for_myprovider_oauth(env["omniauth.auth"], current_user)
     if @user.persisted?
