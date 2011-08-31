@@ -193,7 +193,8 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
   # config.omniauth :twitter, 'CONSUMER_KEY', 'CONSUMER_SECRET'
   # config.omniauth :twitter, 'GEIw64Zohx3vkhWdZQZ9w', 'ixWxK6p6geEchUyGTxk9ODvKNMxmq92NQnq8JvAI0'
-  config.omniauth :myprovider, 'DeBqBpzYBdxWPbzXFvtF', '2BCE4fnfPf32EOiQORs4oS4pVTIiEK9osqB7HVAF'
+  #config.omniauth :myprovider, 'DeBqBpzYBdxWPbzXFvtF', '2BCE4fnfPf32EOiQORs4oS4pVTIiEK9osqB7HVAF'
+  config.omniauth :myprovider, '120094574678888', 'b54dc82476af2814e620b86776c42c0e'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

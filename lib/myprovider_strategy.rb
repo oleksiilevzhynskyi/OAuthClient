@@ -7,8 +7,8 @@ module OmniAuth
       def initialize(app, client_id=nil, client_secret=nil, options={}, &block)
         client_options = {
           :site => "http://localhost:3333",
-          :authorize_url => "http://localhost:3333/oauth/autorize",
-          :token_url => "http://localhost:3333/oauth/access_token"
+          :authorize_url => "http://localhost:3333/oauth2/authorize",
+          :token_url => "http://localhost:3333/oauth2/token"
         }
         super(app, :myprovider, client_id, client_secret, client_options, &block)
       end
@@ -25,18 +25,20 @@ module OmniAuth
 
       def build_access_token
         super
-        #@access_token = ::OAuth2::AccessToken.new(client, myprovider_session['access_token'], {:mode => :query, :param_name => 'access_token'})
       end
 
       # normalize user's data according to http://github.com/intridea/omniauth/wiki/Auth-Hash-Schema
       def auth_hash
         OmniAuth::Utils.deep_merge(super(), {
-          'uid' => @uid,
+          'uid' => @client_id,
           'user_info' => {
-            'name'     => @username,
-            'nickname' => @username,
+            'user_hash' => user_data,
           }
         })
+      end
+
+      def user_data
+        @data ||= @access_token.get('/me').parsed
       end
     end
   end
